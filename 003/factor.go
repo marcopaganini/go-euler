@@ -2,24 +2,29 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"math/big"
 	"math/rand"
 	"time"
 )
 
 func main() {
-	var num int64
+	var (
+		num      int64
+		maxprime int64
+	)
 
 	num = 600851475143
-	maxNum := int64(math.Sqrt(float64(num)))
+	limit := num
 
-	for n := maxNum; n > 1; n-- {
-		if num%n == 0 && fermatPrime(n) {
-			fmt.Println("Result: ", n)
-			break
+	for n := int64(2); n <= limit; n++ {
+		if num%n == 0 {
+			limit = num / n
+			if fermatPrime(n) {
+				maxprime = n
+			}
 		}
 	}
+	fmt.Println("Result:", maxprime)
 }
 
 func fermatPrime(p int64) bool {
