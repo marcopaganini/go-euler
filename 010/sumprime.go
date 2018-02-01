@@ -15,8 +15,10 @@ func main() {
 		n   int64
 	)
 
-	for n = 2; n < maxnum; n++ {
-		if big.NewInt(int64(n)).ProbablyPrime(40) {
+	// Already includes 2 + 3
+	sum = 2
+	for n = 5; n < maxnum; n += 2 {
+		if fermatPrime(big.NewInt(int64(n))) {
 			sum += n
 			//fmt.Println("Adding", n, "sum is now", sum)
 		}
@@ -26,7 +28,7 @@ func main() {
 }
 
 func fermatPrime(p *big.Int) bool {
-	const iterations = 40
+	const iterations = 64
 
 	// Any positive number less than 4 is prime by default.
 	if p.Cmp(big.NewInt(4)) == -1 {
